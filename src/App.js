@@ -3,21 +3,35 @@ import ComfyJS from 'comfy.js';
 import {useState} from 'react';
 import './App.css';
 import tracker from './tracker';
+import count from './count';
 import {XYPlot, HorizontalBarSeries, AbstractSeries, XAxis, YAxis,LabelSeries} from 'react-vis';
-ComfyJS.Init("aladdintwisted");
+import 'antd/dist/antd.css';
+import {Slider} from 'antd';
+
 var counter = 0;
+var data = []
+var messages = []
+
 
 
 function App() {
-  var data = []
+  const [limit, setlimit] = useState(100);
   const [message, setMessage] = useState("");
-  const [counter, setCounter] = useState(0);
+  const [channel, setchannel] = useState("auronplay");
+  // const [counter, setCounter] = useState(0);
   const [counters, setcounters] = useState({})
-  ComfyJS.onChat = (user, message) => {
-    setCounter(counter + 1);
-    setMessage(message);
-    tracker(message,counters,setcounters);
+  function handleInit(channel){
+    ComfyJS.Init(channel);
+    ComfyJS.onChat = (user, message) => {
+      messages.push(message);
+      count(messages,setcounters,limit);
+      counter++;
+      setMessage(message);
+      // console.log(messages);
+      // tracker(message,counters,setcounters,messages);
+    }
   }
+    
   function getHighest(){
     var items = Object.keys(counters).map(function(key) {
       return [key, counters[key]];
@@ -36,17 +50,31 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <text>enter your user name</text>
-        <p>{message}</p>
-        <XYPlot height={400} width={600}>
-          <HorizontalBarSeries data={data}/>
-          <LabelSeries data={data} animation/>
-          <XAxis/>
-        </XYPlot>
-        <p>{getHighest()}</p>
-        <button onClick={()=>{setcounters({})}}>reset</button>
+        <h1>Twitch Chat Clear View</h1>
       </header>
-      
+        <label>
+          Name:
+          <input type="text" name="name" onChange={(value)=>{console.log(value.target.value);setchannel(value.target.value)}}/>
+          <button onClick={()=>{handleInit(channel)}}>Track!</button>
+        </label>
+        {/* <p>latest Message: {message}</p> */}
+        <p>total number of comments: {messages.length}</p>
+        <div>
+          <XYPlot height={400} width={600}>
+            <HorizontalBarSeries data={data}/>
+            <LabelSeries data={data} animation/>
+            <XAxis/>
+          </XYPlot>
+          {/* <Slider/> */}
+          <p>frequency: {limit}</p>
+          <input type="number" onChange={(value)=>{setlimit(value.target.value)}}/>
+        </div>
+        
+        <p>{getHighest()}</p>
+        <div>
+          <button onClick={()=>{messages.length = 0}}>reset</button>
+        </div>
+        <p>beta v0.1</p>
     </div>
   );
 }
