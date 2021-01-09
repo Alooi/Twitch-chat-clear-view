@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import ComfyJS from 'comfy.js';
 import {useState} from 'react';
+import twitchIcon from './Assets/twitch_icon.png';
 import './App.css';
 import tracker from './tracker';
 import count from './count';
@@ -9,9 +10,10 @@ import 'antd/dist/antd.css';
 import {Slider} from 'antd';
 
 var counter = 0;
-var data = []
-var messages = []
-
+var data = [];
+var messages = [];
+var height = 400;
+var width = window.innerWidth/2;
 
 
 function App() {
@@ -50,6 +52,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <img src={twitchIcon} className='App-logo'/>
         <h1>Twitch Chat Clear View</h1>
       </header>
         <label>
@@ -59,8 +62,8 @@ function App() {
         </label>
         {/* <p>latest Message: {message}</p> */}
         <p>total number of comments: {messages.length}</p>
-        <div>
-          <XYPlot height={400} width={600}>
+        <div className="graph">
+          <XYPlot height={height} width={width}>
             <HorizontalBarSeries data={data}/>
             <LabelSeries data={data} animation/>
             <XAxis/>
