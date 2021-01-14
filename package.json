@@ -9,6 +9,7 @@
     "comfy.js": "^1.1.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-vis": "^1.11.7",
     "recharts": "^2.0.0",
