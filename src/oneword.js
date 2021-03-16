@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import ComfyJS from 'comfy.js';
 import {useState} from 'react';
 import twitchIcon from './Assets/twitch_icon.png';
-import './oneword.css';
+import './style.css';
 import tracker from './tracker';
 import count from './count';
 import {XYPlot, HorizontalBarSeries, AbstractSeries, XAxis, YAxis,LabelSeries} from 'react-vis';
@@ -53,7 +53,7 @@ function App() {
   }
   if (start){
     return (
-      <div className="App">
+      <div className="Oneword">
           <h1>top vote: {getHighest()[0]}</h1>
           <h3>precentage: %{(getHighest()[1]/limit)*100}</h3>
           {/* <p>beta v0.1</p> */}
@@ -61,7 +61,7 @@ function App() {
     );
   } else {
     return(
-    <div className="App">
+    <div className="Input">
       <label>
         Name:
         <input type="text" name="name" onChange={(value)=>{console.log(value.target.value);setchannel(value.target.value)}}/>

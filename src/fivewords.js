@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import ComfyJS from 'comfy.js';
 import {useState} from 'react';
 import twitchIcon from './Assets/twitch_icon.png';
-import './fivewords.css';
+import './style.css';
 import tracker from './tracker';
 import count from './count';
 import {XYPlot, HorizontalBarSeries, AbstractSeries, XAxis, YAxis,LabelSeries} from 'react-vis';
@@ -52,7 +52,7 @@ function App() {
   }
   if (start){
     return (
-      <div className="App">
+      <div className="Fivewords">
           {/* <p>latest Message: {message}</p> */}
           {/* <p>total number of comments: {messages.length}</p> */}
           <div className="graph">
@@ -62,24 +62,26 @@ function App() {
               <XAxis/>
             </XYPlot>
             {/* <Slider/> */}
-            <p>frequency: {limit}</p>
-            <input type="number" onChange={(value)=>{setlimit(value.target.value)}}/>
+            
           </div>
-          
           <p>{getHighest()}</p>
           <div>
-            <button onClick={()=>{messages.length = 0}}>reset</button>
+            {/* <button onClick={()=>{messages.length = 0}}>apply</button> */}
           </div>
-          <p>beta v0.1</p>
       </div>
     );
   } else {
     return(
-    <div className="App">
+    <div className="Input">
       <label>
         Name:
         <input type="text" name="name" onChange={(value)=>{console.log(value.target.value);setchannel(value.target.value)}}/>
         <button onClick={()=>{handleInit(channel)}}>Track!</button>
+      </label>
+      <p>settings:</p>
+      <label>
+        frequency: {limit}
+        <input type="number" onChange={(value)=>{setlimit(value.target.value)}}/>
       </label>
     </div>
     );
